@@ -1,0 +1,19 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/myrecord?&serverTimezone=UTC
+    username: root
+    password: root
+
+#    spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+#    spring.datasource.url=jdbc:mysql://localhost:3306/myrecord?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
+#    spring.datasource.username=root
+#    spring.datasource.password=root
+logging:
+  level:
+    com:
+      home:
+        record:
+          mapper: debug

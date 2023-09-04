@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.home.record.mapper.TourCityMapper">
+
+    <resultMap id="BaseResultMap" type="com.home.record.entity.TourCity">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="city" column="city" jdbcType="VARCHAR"/>
+            <result property="friendId" column="friend_id" jdbcType="VARCHAR"/>
+            <result property="season" column="season" jdbcType="VARCHAR"/>
+            <result property="tourStaTime" column="tour_sta_time" jdbcType="TIMESTAMP"/>
+            <result property="tourEndTime" column="tour_end_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,city,friend_id,
+        season,tour_sta_time,tour_end_time
+    </sql>
+
+    <select id="tourCityPage" resultType="com.home.record.vo.TourCityVo">
+        select
+            c.city,c.season,c.tour_sta_time,c.tour_end_time,g.friend_name,g.place
+        from tour_city c
+            left join go_with_friend g on c.friend_id = g.id
+        <where>
+            <if test="tourCityVo.friendName != null and tourCityVo.friendName != ''">
+                and g.friend_name like CONCAT(#{tourCityVo.friendName},'%')
+            </if>
+            <if test="tourCityVo.tourStaTime != null and tourCityVo.tourStaTime != ''">
+                and c.tour_sta_time <![CDATA[ >= ]]> #{tourCityVo.tourStaTime}
+            </if>
+            <if test="tourCityVo.tourEndTime != null and tourCityVo.tourEndTime != ''">
+                and c.tour_end_time <![CDATA[ <= ]]> #{tourCityVo.tourEndTime}
+            </if>
+        </where>
+    </select>
+</mapper>
